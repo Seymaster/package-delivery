@@ -17,12 +17,17 @@ wss.on('connection', (ws) => {
                 }
                 const location = body.location;
                 await DeliveryRepository.update({ _id: Delivery._id }, { location });
-                ws.send(
-                    JSON.stringify({
-                        data: "Delivery Location Updated Successfully",
-                        statusCode: 200,
-                    })
-                );
+                Delivery = await DeliveryRepository.findOne({ delivery_id });
+                wss.clients.forEach((client) => {
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(
+                            JSON.stringify({
+                                event: 'delivery_updated',
+                                delivery: Delivery,
+                            })
+                        );
+                    }
+                });
             } catch (e) {
                 ws.send(JSON.stringify({ error: e.message, statusCode: 500 }));
             }
@@ -46,30 +51,45 @@ wss.on('connection', (ws) => {
                 }
                 if (body.status === "picked-up"){
                     await DeliveryRepository.update({ _id: Delivery._id }, { status: body.status, pickup_time: new Date() });
-                    ws.send(
-                        JSON.stringify({
-                            data: "Delivery Status Updated Successfully",
-                            statusCode: 200,
-                        })
-                    );
+                    Delivery = await DeliveryRepository.findOne({ delivery_id });
+                    wss.clients.forEach((client) => {
+                        if (client.readyState === WebSocket.OPEN) {
+                            client.send(
+                                JSON.stringify({
+                                    event: 'delivery_updated',
+                                    delivery: Delivery,
+                                })
+                            );
+                        }
+                    });
                 };
                 if (body.status === "in-transit") {           
                     await DeliveryRepository.update({ _id: Delivery._id }, { status: body.status, start_time: new Date() });
-                    ws.send(
-                        JSON.stringify({
-                            data: "Delivery Status Updated Successfully",
-                            statusCode: 200,
-                        })
-                    );
+                    Delivery = await DeliveryRepository.findOne({ delivery_id });
+                    wss.clients.forEach((client) => {
+                        if (client.readyState === WebSocket.OPEN) {
+                            client.send(
+                                JSON.stringify({
+                                    event: 'delivery_updated',
+                                    delivery: Delivery,
+                                })
+                            );
+                        }
+                    });
                 };
                 if (body.status === "delivered" || body.status === "failed") {    
                     await DeliveryRepository.update({ _id: Delivery._id }, { status: body.status, end_time: new Date() });
-                    ws.send(
-                        JSON.stringify({
-                            data: "Delivery Status Updated Successfully",
-                            statusCode: 200,
-                        })
-                    );
+                    Delivery = await DeliveryRepository.findOne({ delivery_id });
+                    wss.clients.forEach((client) => {
+                        if (client.readyState === WebSocket.OPEN) {
+                            client.send(
+                                JSON.stringify({
+                                    event: 'delivery_updated',
+                                    delivery: Delivery,
+                                })
+                            );
+                        }
+                    });
                 };
             } catch (e) {
                 ws.send(JSON.stringify({ error: e.message, statusCode: 500 }));
