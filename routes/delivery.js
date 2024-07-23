@@ -1,22 +1,16 @@
-// const router = require("express").Router();
-// const recordController = require("../app/records/RecordController")
+const router = require("express").Router();
+const deliveryController = require("../src/delivery/deliveryController");
 
 
-// router.get("/", recordController.getAllRecords);
+router.get("/", deliveryController.findAll);
 
-// router.post("/", recordController.createRecord);
+router.post("/", deliveryController.create);
 
-// router.put("/:recordId", recordController.updateRecord);
+router.put("/:id", deliveryController.update);
 
-// router.post("/query-record", recordController.queryRecord);
+router.get("/:id", deliveryController.findById);
 
-// router.get("/query-record/:recordId", recordController.getQueryRecord);
-
-// router.get("/dashboard/report", recordController.dashboardReport)
-
-// router.get("/export", recordController.exportRecord)
+router.delete("/:id", deliveryController.delete);
 
 
-
-
-// module.exports = router;
+module.exports = router;

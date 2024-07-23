@@ -1,7 +1,6 @@
 "use strict";
 const mongoose = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
-const moment = require("moment");
 const { v4: uuidv4 } = require("uuid");
 
 const Schema = mongoose.Schema;
@@ -9,7 +8,7 @@ const Schema = mongoose.Schema;
 const packageSchema = new Schema({
     package_id: { type: String, required: true, unique: true, default: uuidv4() },
     active_delivery_id: { type: String, required: false },
-    description: { type: String, required: true },
+    description: { type: String, required: false },
     weight: { type: Number, required: true },
     width: { type: Number, required: true },
     height: { type: Number, required: true },

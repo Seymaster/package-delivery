@@ -3,7 +3,7 @@ const {createErrorResponse, createSuccessResponse} = require("../helper");
 
 module.exports = {
     create: async (req, res, next) => {
-        const { data, error, statusCode } = await deliveryService.createPackage(req.body)
+        const { data, error, statusCode } = await deliveryService.createDelivery(req.body)
         if (error) {
             return createErrorResponse(res, error, statusCode)
         }
@@ -11,7 +11,7 @@ module.exports = {
     },
 
     findAll: async (req, res, next) => {
-        const { data, error, statusCode } = await deliveryService.findAllPackage(req.query)
+        const { data, error, statusCode } = await deliveryService.findAllDelivery(req.query)
         if (error) {
             return createErrorResponse(res, error, statusCode)
         }
@@ -19,7 +19,7 @@ module.exports = {
     },
 
     findById:  async (req, res, next) => {
-        const { data, error, statusCode } = await deliveryService.findByIdPackage(req.params.id)
+        const { data, error, statusCode } = await deliveryService.findByIdDelivery(req.params.id)
         if (error) {
             return createErrorResponse(res, error, statusCode)
         }
@@ -27,8 +27,8 @@ module.exports = {
     },
 
     update: async (req, res, next) => {
-        const payload = {package_id: req.params.id, body: req.body};
-        const { data, error, statusCode } = await deliveryService.updatePackage(payload)
+        const payload = {Delivery_id: req.params.id, body: req.body};
+        const { data, error, statusCode } = await deliveryService.updateDelivery(payload)
         if (error) {
             return createErrorResponse(res, error, statusCode)
         }
@@ -36,7 +36,7 @@ module.exports = {
     },
 
     delete: async (req, res, next) => {
-        const { data, error, statusCode } = await deliveryService.deletePackage(req.params.id)
+        const { data, error, statusCode } = await deliveryService.deleteDelivery(req.params.id)
         if (error) {
             return createErrorResponse(res, error, statusCode)
         }

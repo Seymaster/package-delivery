@@ -1,23 +1,32 @@
-const deliveryService = require("../Delivery/deliveryService");
-const deliverValidator = require("./deliverValidator");
+const DeliveryRepository = require("./deliveryRepository");
+const PackageRepository = require("../package/packageRepository");
+const deliveryValidator = require("./deliveryValidator");
 const moment = require('moment');
 
 
 exports.createDelivery = async (payload) => {
-    let ValidationError = await deliverValidator.create(payload)
+    let ValidationError = await deliveryValidator.create(payload)
     if (ValidationError) {
         return {
-            error,
+            error: ValidationError,
             statusCode: 422
         }
     }
     try{
-        const Delivery = await deliveryService.create(payload);
+        const Package = await PackageRepository.findOne({package_id: payload.package_id});
+        if (!Package) {
+            return {error: "Package Not Found", statusCode: 404}
+        };
+
+        const Delivery = await DeliveryRepository.create(payload);
         if(Delivery.error){
             return {error: Delivery.error, statusCode: 400}
         }
         return {data: Delivery, statusCode: 200};
     }catch (e) {
+        if (e.code === 11000) {
+            return {error: "Duplicate key error: Delivery ID already exists", statusCode: 400};
+        }
         return {error: e.message, statusCode: 500}
     }
 };
@@ -27,7 +36,7 @@ exports.findAllDelivery = async (payload) => {
         let page = payload.page || 1;
         let limit = payload.limit || 10;
     
-        let data = await deliveryService.all(payload, { _id: -1 }, page, limit);
+        let data = await DeliveryRepository.all(payload, { _id: -1 }, page, limit);
         return {data, statusCode: 200};
     }catch (e) {
         return {error: e.message, statusCode: 500}
@@ -36,11 +45,12 @@ exports.findAllDelivery = async (payload) => {
 
 exports.updateDelivery = async (payload) => {
     try{
-        let Delivery = await deliveryService.findOne({delivery_id: payload.Delivery_id});
+        let Delivery = await DeliveryRepository.findOne({delivery_id: payload.Delivery_id});
         if (!Delivery) {
             return {error: "Delivery Not Found", statusCode: 404}
         }
-        await deliveryService.update({_id: Delivery._id}, payload.body);
+
+        await DeliveryRepository.update({_id: Delivery._id}, payload.body);
         return {data: "Delivery Updated Successfully", statusCode: 200};
     }catch (e) {
         return {error: e.message, statusCode: 500}
@@ -49,7 +59,7 @@ exports.updateDelivery = async (payload) => {
 
 exports.findByIdDelivery = async (payload) => {
     try{
-        const Delivery = await deliveryService.findOne({delivery_id: payload});
+        const Delivery = await DeliveryRepository.findOne({delivery_id: payload});
         if(!Delivery){
             return {error: "Delivery Not found", statusCode: 404}
         }
@@ -62,11 +72,11 @@ exports.findByIdDelivery = async (payload) => {
 
 exports.deleteDelivery = async (payload) => { 
     try{
-        let Delivery = await deliveryService.findOne({delivery_id: payload});
+        let Delivery = await DeliveryRepository.findOne({delivery_id: payload});
         if (!Delivery) {
             return {error: "Delivery Not Found", statusCode: 404}
         }
-        await deliveryService.update({_id: Delivery._id}, {deletedAt: moment().unix()});
+        await DeliveryRepository.update({_id: Delivery._id}, {deletedAt: moment().unix()});
         return {data: "Delivery Deleted Successfully", statusCode: 200};
     }catch (e) {
         return {error: e.message, statusCode: 500}

@@ -1,26 +1,34 @@
-const PackageRepository = require("../Package/packageRepository");
+const PackageRepository = require("./packageRepository");
 const packageValidator = require("./packageValidator");
 const moment = require('moment');
+const Joi = require("joi");
 
 
 exports.createPackage = async (payload) => {
-    let ValidationError = await packageValidator.create(payload)
-    if (ValidationError) {
+    const validationError = await packageValidator.create(payload);
+    if (validationError) {
         return {
-            error,
+            error: validationError,
             statusCode: 422
         }
     }
-    try{
-        const Package = await PackageRepository.create(payload);
-        if(Package.error){
-            return {error: Package.error, statusCode: 400}
+    try {
+        const packageData = await createPackageInRepository(payload);
+        if (packageData.error) {
+            return {error: packageData.error, statusCode: 400}
         }
-        return {data: Package, statusCode: 200};
-    }catch (e) {
-        return {error: e.message, statusCode: 500}
+        return {data: packageData, statusCode: 200};
+    } catch (error) {
+        if (e.code === 11000) {
+            return {error: "Duplicate key error: Delivery ID already exists", statusCode: 400};
+        }
+        return {error: error.message, statusCode: 500}
     }
 };
+
+async function createPackageInRepository(payload) {
+    return await PackageRepository.create(payload);
+}
 
 exports.findAllPackage = async (payload) => {
     try{

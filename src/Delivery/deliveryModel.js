@@ -36,7 +36,8 @@ const deliverySchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ['open', 'picked-up', 'in-transit', 'delivered', 'failed'],
-    required: true
+    required: false,
+    default: 'open'
   }
 });
 

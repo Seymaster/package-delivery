@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const packageController = require("../src/Package/packageController");
+const packageController = require("../src/package/packageController");
 
 
 router.get("/", packageController.findAll);
