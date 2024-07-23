@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "jest --watchAll --verbose --env=node --detectOpenHandles"
+    "test": "jest --verbose --env=node --detectOpenHandles"
   },
   "author": "Alugbin Abiodun Oluwaseyi",
   "license": "ISC",
@@ -23,7 +23,8 @@
     "morgan": "^1.10.0",
     "tm-constants": "^1.0.2",
     "tm-utils": "^0.1.18",
-    "uuid": "^10.0.0"
+    "uuid": "^10.0.0",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "jest": "^24.8.0",

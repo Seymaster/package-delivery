@@ -7,4 +7,7 @@ module.exports = (app, express) => {
 
     //database connection
     require("./database");
+
+    // websocket
+    require("../src/Event/websocket");
 };
