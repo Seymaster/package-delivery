@@ -1,6 +1,4 @@
 const deliveryService = require('../../src/Delivery/deliveryService');
-const DeliveryRepository = require('../../src/Delivery/deliveryRepository');
-const PackageRepository = require('../../src/package/packageRepository');
 const deliveryValidator = require('../../src/Delivery/deliveryValidator');
 
 describe('Delivery',()=>{
@@ -23,7 +21,7 @@ describe('Delivery',()=>{
         it('should return validation error if payload is invalid', async () => {
             deliveryValidator.create.mockResolvedValue('Invalid payload');
             
-            const payload = { /* invalid payload */ };
+            const payload = { package_id: '123' };
             const result = await deliveryService.createDelivery(payload);
             
             expect(result).toEqual({
