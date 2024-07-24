@@ -23,7 +23,7 @@ module.exports = {
             if (Delivery.error) {
                 return { error: Delivery.error, statusCode: 400 }
             }
-            return { data: Delivery, statusCode: 200 };
+            return { data: Delivery, statusCode: 201 };
         } catch (e) {
             if (e.code === 11000) {
                 return { error: "Duplicate key error: Delivery ID already exists", statusCode: 400 };

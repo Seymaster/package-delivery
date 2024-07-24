@@ -6,7 +6,7 @@ wss.on('connection', (ws) => {
     console.log('WebSocket connected');
     ws.on("message", async function message(data) {
         const { event, delivery_id, body } = JSON.parse(data);
-        if (event === "location_changed" || body.location) {
+        if (event === "location_changed" && body.location) {
             try {
                 let Delivery = await DeliveryRepository.findOne({ delivery_id });
                 if (!Delivery) {
