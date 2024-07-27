@@ -1,0 +1,95 @@
+<h2>Package List</h2>
+<div class="row">
+    <div class="column middle card" style="background-color:#aad390;">
+        <div *ngIf="this.totalPackage == 0">
+            <p>You currently don't have a package</p>
+        </div>
+        <div >
+            <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+         
+              
+                <!-- Description Column -->
+                <ng-container matColumnDef="description">
+                  <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+                </ng-container>
+              
+                <!-- Weight Column -->
+                <ng-container matColumnDef="weight">
+                  <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.weight}} kg </mat-cell>
+                </ng-container>
+              
+                <!-- Width Column -->
+                <ng-container matColumnDef="width">
+                  <mat-header-cell *matHeaderCellDef> Width </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.width}} cm </mat-cell>
+                </ng-container>
+              
+                <!-- Height Column -->
+                <ng-container matColumnDef="height">
+                  <mat-header-cell *matHeaderCellDef> Height </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.height}} cm </mat-cell>
+                </ng-container>
+              
+                <!-- Depth Column -->
+                <ng-container matColumnDef="depth">
+                  <mat-header-cell *matHeaderCellDef> Depth </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.depth}} cm </mat-cell>
+                </ng-container>
+              
+                <!-- From Name Column -->
+                <ng-container matColumnDef="from_name">
+                  <mat-header-cell *matHeaderCellDef> From Name </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.from_name}} </mat-cell>
+                </ng-container>
+              
+                <!-- From Address Column -->
+                <ng-container matColumnDef="from_address">
+                  <mat-header-cell *matHeaderCellDef> From Address </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.from_address}} </mat-cell>
+                </ng-container>
+              
+                <!-- To Name Column -->
+                <ng-container matColumnDef="to_name">
+                  <mat-header-cell *matHeaderCellDef> To Name </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.to_name}} </mat-cell>
+                </ng-container>
+              
+                <!-- To Address Column -->
+                <ng-container matColumnDef="to_address">
+                  <mat-header-cell *matHeaderCellDef> To Address </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.to_address}} </mat-cell>
+                </ng-container>
+              
+             
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+              </mat-table>
+              
+              <mat-paginator [length]="totalDocs" [pageSize]="limit" (page)="pageEvent($event)">
+              </mat-paginator>
+              
+        </div>
+    </div>
+    <div class="column side" >
+        <div>
+            <button class="button" (click)="openDialog()">Create Package</button>
+        </div>
+    </div>
+  </div>
+
+  <h2>Delivery List</h2>
+<div class="row">
+    <div class="column middle card" style="background-color:#aad390;">
+        <div *ngIf="this.totalPackage==0">
+            <p>You currently don't have a delivery</p>
+        </div>
+    </div>
+    <div class="column side" >
+        <div>
+            <button class="button">Create Delivery</button>
+        </div>
+    </div>
+  </div>
+

@@ -1,0 +1,66 @@
+
+/* Container for flexboxes */
+.row {
+    display: -webkit-flex;
+    display: flex;
+  }
+  
+  /* Create three unequal columns that sits next to each other */
+  .column {
+    padding: 10px;
+    height: 100%; /* Should be removed. Only for demonstration */
+  }
+  
+  /* Left and right column */
+  .column.side {
+     -webkit-flex: 1;
+     -ms-flex: 1;
+     flex: 1;
+  }
+  
+  /* Middle column */
+  .column.middle {
+    -webkit-flex: 2;
+    -ms-flex: 2;
+    flex: 5;
+  }
+
+
+  .button {
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #04AA6D;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+  }
+  
+  .button:hover {background-color: #3e8e41}
+  
+  .button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+
+
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+  

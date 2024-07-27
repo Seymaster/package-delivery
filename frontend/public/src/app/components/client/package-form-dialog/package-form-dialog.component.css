@@ -1,0 +1,16 @@
+.map-container {
+    margin: 20px 0;
+  }
+
+  .mat-dialog-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .form-field {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%; /* Add some spacing between form fields */
+  }
